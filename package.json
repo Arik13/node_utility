@@ -2,8 +2,6 @@
     "name": "node_utility",
     "version": "1.0.1",
     "description": "",
-    "main": "app.js",
-    "type": "module",
     "scripts": {
         "start": "ts-node-dev --respawn --cls --exit-child --ignore-watch node_modules app.ts"
     },
@@ -27,6 +25,9 @@
     },
     "_moduleAliases": {
         "@node": "./src",
-        "@util": "./node_modules/ts_utility/src/"
-    }
+        "@util": "./node_modules/ts_utility/dist/src/"
+    },
+    "files": [
+        "/dist"
+    ]
 }

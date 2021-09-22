@@ -68,7 +68,7 @@
         "baseUrl": ".",
         "paths": {
             "@node/*": ["./src/*"],
-            "@util/*": ["../ts_utility/src/*"],
+            "@util/*": ["./node_modules/ts_utility/dist/src/*"],
         },
         "resolveJsonModule": true,
         "typeRoots": [

@@ -10,10 +10,9 @@
     "license": "ISC",
     "dependencies": {
         "module-alias": "^2.2.2",
-        "axios": "^0.19.2",
-        "uniqid": "^5.2.0",
         "change-case": "^4.1.2",
-        "chart.js-image": "^5.6.0"
+        "chart.js-image": "^5.6.0",
+        "ts_utility": "github:Arik13/ts_utility"
     },
     "devDependencies": {
         "@types/node": "^14.0.1",
@@ -27,7 +26,6 @@
     },
     "_moduleAliases": {
         "@node": "./src",
-        "@util": "../ts_utility/src",
-        "@shared": "../vtt_shared"
+        "@util": "./node_modules/ts_utility/src/"
     }
 }

@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { stringify } from "@node/stringifier";
+// import { stringify } from "@node/stringifier";
 
 //______________________________________________________________________________________________________
 //______________________________________________________________________________________________________
@@ -251,8 +251,8 @@ export let readDirectoryWithStatsSync: (path: string) => StatDir = dirDataCreato
 // OLD FILE MODULE
 
 export let readObject = (path: string) => JSON.parse(fs.readFileSync(path, {encoding: "utf-8"}));
-// export let writeObject = (path: string, data: any) => fs.writeFileSync(path, JSON.stringify(data, null, 4), {encoding: "utf-8"});
-export let writeObject = (path: string, data: any, options?: any) => fs.writeFileSync(path, stringify(data, options), {encoding: "utf-8"});
+export let writeObject = (path: string, data: any) => fs.writeFileSync(path, JSON.stringify(data, null, 4), {encoding: "utf-8"});
+// export let writeObject = (path: string, data: any, options?: any) => fs.writeFileSync(path, JSON.stringify(data, options), {encoding: "utf-8"});
 
 export let readDirectoryFiles = (path: string) => fs.readdirSync(path, {withFileTypes: true})
         .filter(p => p.isFile())

@@ -53,7 +53,7 @@ export declare let setFolderStats: (f: StatDir) => {
 export declare let readDirectoryWithStats: (path: string) => Promise<StatDir>;
 export declare let readDirectoryWithStatsSync: (path: string) => StatDir;
 export declare let readObject: (path: string) => any;
-export declare let writeObject: (path: string, data: any, options?: any) => void;
+export declare let writeObject: (path: string, data: any) => void;
 export declare let readDirectoryFiles: (path: string) => {
     name: string;
     file: any;

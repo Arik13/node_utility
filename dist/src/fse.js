@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.copyDirectoryInto = exports.writeDirectory = exports.clearFolder = exports.clearExtensionFromFolder = exports.readDirectoryFiles = exports.writeObject = exports.readObject = exports.readDirectoryWithStatsSync = exports.readDirectoryWithStats = exports.setFolderStats = exports.setFileStats = exports.formatBytes = exports.linearizeFiles = exports.linearizeDirectory = exports.dirDataCreator = exports.traverseDirLtR = exports.traverseDirDFS = exports.getFileData = exports.getFilesData = exports.readFiles = exports.readDirectory = void 0;
 const fs = require("fs");
-const stringifier_1 = require("@node/stringifier");
 let readDirectory = (path) => {
     try {
         let paths = fs.readdirSync(path, { withFileTypes: true });
@@ -207,9 +206,9 @@ exports.readDirectoryWithStatsSync = (0, exports.dirDataCreator)(exports.setFold
 // OLD FILE MODULE
 let readObject = (path) => JSON.parse(fs.readFileSync(path, { encoding: "utf-8" }));
 exports.readObject = readObject;
-// export let writeObject = (path: string, data: any) => fs.writeFileSync(path, JSON.stringify(data, null, 4), {encoding: "utf-8"});
-let writeObject = (path, data, options) => fs.writeFileSync(path, (0, stringifier_1.stringify)(data, options), { encoding: "utf-8" });
+let writeObject = (path, data) => fs.writeFileSync(path, JSON.stringify(data, null, 4), { encoding: "utf-8" });
 exports.writeObject = writeObject;
+// export let writeObject = (path: string, data: any, options?: any) => fs.writeFileSync(path, JSON.stringify(data, options), {encoding: "utf-8"});
 let readDirectoryFiles = (path) => fs.readdirSync(path, { withFileTypes: true })
     .filter(p => p.isFile())
     .map(p => ({ name: p.name.split(".")[0], file: (0, exports.readObject)(`${path}/${p.name}`) }));

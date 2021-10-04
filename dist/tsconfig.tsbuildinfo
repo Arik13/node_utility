@@ -172,8 +172,8 @@
         "affectsGlobalScope": false
       },
       "../src/fse/dirmapinitializer.ts": {
-        "version": "0c1b8bd529b1aabedada6e89bac988067ed9d1bead09fd584d7b5175a08a37ca",
-        "signature": "ce6a4858098dce6762bc6f6023a1833eedc0de69463bd58e6bebd6f1742b6dc7",
+        "version": "f1169bb365fd8396667e875c9a793f0a0f018418b5e8ae55c5eed0c6b7e71500",
+        "signature": "f5bc7695274f7d1f1fdb949fac5557279db377e41fbc9b1bc9660f951e4e0da4",
         "affectsGlobalScope": false
       },
       "../app.ts": {
@@ -830,6 +830,9 @@
       ],
       "../node_modules/@types/whatwg-url/ts3.9/index.d.ts": [
         "../node_modules/@types/node/index.d.ts"
+      ],
+      "../src/fse/dirmapinitializer.ts": [
+        "../node_modules/ts_utility/dist/src/directory.d.ts"
       ],
       "../src/fse/index.ts": [
         "../node_modules/@types/node/fs.d.ts"

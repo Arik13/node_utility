@@ -4,7 +4,6 @@ exports.dirMapFromPath = exports.traverseDirPaths = void 0;
 const Directory_1 = require("@util/Directory");
 const fs = require("fs");
 const Path = require("path");
-const Functions_1 = require("@util/Functions");
 exports.traverseDirPaths = (path, visitDir, visitFile) => {
     visitDir(path);
     let paths = fs.readdirSync(path, { withFileTypes: true });
@@ -32,6 +31,6 @@ exports.dirMapFromPath = (rootPath) => {
             name: pd.name,
         }, pd.ext, parent.id);
     });
-    Functions_1.deeplog(dirMap.root);
+    return dirMap;
 };
 //# sourceMappingURL=DirMapInitializer.js.map

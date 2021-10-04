@@ -35,5 +35,5 @@ export let dirMapFromPath = (rootPath: string) => {
             }, pd.ext, parent.id);
         },
     )
-    deeplog(dirMap.root);
+    return dirMap
 }

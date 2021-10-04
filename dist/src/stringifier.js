@@ -1,16 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stringify = exports.convertToASCII = exports.searchForNonASCII = void 0;
-let searchForNonASCII = (str) => {
+exports.searchForNonASCII = (str) => {
     let codes = str.split("")
         .filter(c => c.charCodeAt(0) > 255)
         .sort()
         .filter((x, i, a) => (i == 0 || a[i - 1] != x));
     console.log(codes);
 };
-exports.searchForNonASCII = searchForNonASCII;
-let convertToASCII = (str) => str.split("").map(c => nonASCIIMap[c] ? nonASCIIMap[c] : c).join("");
-exports.convertToASCII = convertToASCII;
+exports.convertToASCII = (str) => str.split("").map(c => nonASCIIMap[c] ? nonASCIIMap[c] : c).join("");
 const nonASCIIMap = {
     '×': "x",
     '‐': "-",
@@ -112,11 +110,10 @@ let elementHandler = (el, depth, o) => {
     }
 };
 let convertToASCIICodes = (obj, options) => elementHandler(obj, 0, options).flat(Infinity);
-let stringify = (obj, options) => {
+exports.stringify = (obj, options) => {
     let o = genOptions(options);
     let asciiCodes = convertToASCIICodes(obj, o);
     let buffer = Buffer.from(asciiCodes);
     return buffer.toLocaleString();
 };
-exports.stringify = stringify;
 //# sourceMappingURL=stringifier.js.map

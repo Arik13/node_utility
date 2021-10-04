@@ -50,7 +50,6 @@ export let readDirectory = (path: string): Dir<any, any> => {
         }
     }
     catch (err) {
-        console.log(err);
         return {
             name: path.split("/").pop(),
             path,
@@ -134,51 +133,6 @@ export function formatBytes(bytes: number, decimals = 2) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-
-// export let setFileStats = async (dir: Dir<any, any>): Promise<Dir<null, fs.Stats>> => {
-//     let files = linearizeFiles(dir);
-//     let promises = files.map(f => fs.promises.stat(f.path))
-//     await Promise.all(promises);
-//     console.log(promises);
-
-//     files.forEach((f, i) => f.data = promises[i])
-//     return dir;
-// }
-
-// export let setFileStats = async (dir: Dir<any, any>): Promise<Dir<null, fs.Stats>> => {
-//     let files = linearizeFiles(dir);
-//     let promises = files.map(f => new Promise((resolve, reject) => {
-//         fs.stat(f.path, (err, stats) => {
-//             f.data = stats;
-//             if (err) throw err;
-//             resolve(true);
-//         })
-//     }))
-//     await Promise.all(promises);
-//     return dir;
-// }
-// export let setFileStats = async (dir: Dir<any, any>): Promise<Dir<null, fs.Stats>> => {
-//     let folderCount = 0;
-//     let finishedCount = 0;
-//     let finished = (resolve: (value: any) => void) => {
-//         finishedCount++;
-//         if (finishedCount != folderCount) return;
-//         resolve(true);
-//     }
-//     await new Promise((resolve, reject) => {
-//         traverseDirLtR(dir, null, f => {
-//             folderCount++;
-//             fs.stat(f.path, (err, stats) => {
-//                 if (err) {
-//                     throw new Error(err.message);
-//                 }
-//                 f.data = stats;
-//                 finished(resolve);
-//             });
-//         });
-//     });
-//     return dir;
-// }
 export let setFileStats = async (dir: Dir<any, any>): Promise<Dir<null, fs.Stats>> => {
     let promises: Promise<any>[] = [];
     traverseDirLtR(dir, null, f => {
@@ -252,17 +206,10 @@ export let readDirectoryWithStatsSync: (path: string) => StatDir = dirDataCreato
 
 export let readObject = (path: string) => JSON.parse(fs.readFileSync(path, {encoding: "utf-8"}));
 export let writeObject = (path: string, data: any) => fs.writeFileSync(path, JSON.stringify(data, null, 4), {encoding: "utf-8"});
-// export let writeObject = (path: string, data: any, options?: any) => fs.writeFileSync(path, JSON.stringify(data, options), {encoding: "utf-8"});
 
 export let readDirectoryFiles = (path: string) => fs.readdirSync(path, {withFileTypes: true})
         .filter(p => p.isFile())
         .map(p => ({name: p.name.split(".")[0], file: readObject(`${path}/${p.name}`)}));
-
-// interface Dir {
-//     name: string;
-//     folders: Dir[];
-//     files: {name: string, file: any}[];
-// }
 
 export let clearExtensionFromFolder = (path: string, extension: string = ".json") => {
     let subPaths = fs.readdirSync(path);
@@ -281,22 +228,8 @@ export let clearFolder = (path: string) => {
     });
 }
 
-// export let readDirectory = (path: string): Dir => {
-//     let paths = fs.readdirSync(path, {withFileTypes: true})
-//     return {
-//         name: path.split("/").pop(),
-//         folders: paths.filter(p => !p.isFile()).map(f => readDirectory(`${path}/${f.name}`)),
-//         files: paths.filter(p => p.isFile()).map(p => ({name: p.name.split(".")[0], file: readObject(`${path}/${p.name}`)})),
-//     }
-// }
 export let writeDirectory = (dir: Dir, path: string) => {
     console.log("UNIMLPEMENTED");
-
-    // traverseDirDFS(dir, )
-    // let newPath = `${path}/${dir.name}`;
-    // fs.mkdirSync(newPath);
-    // dir.folders.forEach(folder => {writeDirectory(folder, newPath)});
-    // dir.files.forEach(file => writeObject(`${newPath}/${file.name}.json`, file.file));
 }
 export let copyDirectoryInto = (from: string, to: string) => {
     let descriptionDir = readDirectory(from)

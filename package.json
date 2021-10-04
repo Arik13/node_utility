@@ -3,7 +3,11 @@
     "version": "1.0.4",
     "description": "",
     "scripts": {
-        "start": "ts-node-dev --respawn --cls --exit-child --ignore-watch node_modules app.ts"
+        "start": "ts-node-dev --respawn --cls --exit-child --ignore-watch node_modules app.ts",
+        "update": "npm update ts_utility",
+        "test": "tsc --noEmit",
+        "build": "tsc",
+        "clean": "rd -Recurse -Force dist"
     },
     "author": "Arik Dicks",
     "license": "ISC",

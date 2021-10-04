@@ -34,6 +34,11 @@ export let dirMapFromPath = (rootPath: string) => {
                 name: pd.name,
             }, pd.ext, parent.id);
         },
-    )
-    return dirMap
+    );
+    let rootName = rootPath.substring(1);
+    dirMap.map(dir => dir.path = dir.path.replace(rootName, ""))
+    let root = dirMap.root.children[0];
+    delete root.parentID;
+    dirMap.reset(root);
+    return dirMap;
 }

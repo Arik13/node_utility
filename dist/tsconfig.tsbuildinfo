@@ -172,7 +172,7 @@
         "affectsGlobalScope": false
       },
       "../src/fse/dirmapinitializer.ts": {
-        "version": "f1169bb365fd8396667e875c9a793f0a0f018418b5e8ae55c5eed0c6b7e71500",
+        "version": "22c6cf9e38bf687fb83d59f38f150d089767bf222ea70e8ecdff221f8f95ea94",
         "signature": "f5bc7695274f7d1f1fdb949fac5557279db377e41fbc9b1bc9660f951e4e0da4",
         "affectsGlobalScope": false
       },

@@ -7,7 +7,7 @@
         "update": "npm update ts_utility",
         "test": "tsc --noEmit",
         "build": "tsc",
-        "clean": "rd -Recurse -Force dist"
+        "clean": "rmdir /s /q dist"
     },
     "author": "Arik Dicks",
     "license": "ISC",

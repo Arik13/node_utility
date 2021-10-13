@@ -1,4 +1,7 @@
 import * as fs from "fs";
+import * as YAML from "yaml";
+import * as Path from "path";
+import { Dict } from "ts_utility/dist/src/Types";
 // import { stringify } from "@node/stringifier";
 
 //______________________________________________________________________________________________________
@@ -204,8 +207,18 @@ export let readDirectoryWithStatsSync: (path: string) => StatDir = dirDataCreato
 
 // OLD FILE MODULE
 
-export let readObject = (path: string) => JSON.parse(fs.readFileSync(path, {encoding: "utf-8"}));
-export let writeObject = (path: string, data: any) => fs.writeFileSync(path, JSON.stringify(data, null, 4), {encoding: "utf-8"});
+type Parser = typeof YAML | typeof JSON;
+let parserDict: Dict<Parser> = {".yaml": YAML, ".yml": YAML, ".json": JSON};
+export let readObject = (path: string) => {
+    let {ext} = Path.parse(path);
+    let data = fs.readFileSync(path, {encoding: "utf-8"});
+    return parserDict[ext].parse(data);
+}
+export let writeObject = (path: string, data: any) => {
+    let {ext} = Path.parse(path);
+    let dataString = parserDict[ext].stringify(data, null, "\t");
+    fs.writeFileSync(path, dataString, {encoding: "utf-8"});
+}
 
 export let readDirectoryFiles = (path: string) => fs.readdirSync(path, {withFileTypes: true})
         .filter(p => p.isFile())

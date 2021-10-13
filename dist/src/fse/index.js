@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.copyDirectoryInto = exports.writeDirectory = exports.clearFolder = exports.clearExtensionFromFolder = exports.readDirectoryFiles = exports.writeObject = exports.readObject = exports.readDirectoryWithStatsSync = exports.readDirectoryWithStats = exports.setFolderStats = exports.setFileStats = exports.formatBytes = exports.linearizeFiles = exports.linearizeDirectory = exports.dirDataCreator = exports.traverseDirLtR = exports.traverseDirDFS = exports.getFileData = exports.getFilesData = exports.readFiles = exports.readDirectory = void 0;
 const fs = require("fs");
+const YAML = require("yaml");
+const Path = require("path");
 exports.readDirectory = (path) => {
     try {
         let paths = fs.readdirSync(path, { withFileTypes: true });
@@ -148,9 +150,17 @@ exports.readDirectoryWithStats = (path) => __awaiter(void 0, void 0, void 0, fun
     return dir;
 });
 exports.readDirectoryWithStatsSync = exports.dirDataCreator(exports.setFolderStats, f => fs.statSync(f.path));
-// OLD FILE MODULE
-exports.readObject = (path) => JSON.parse(fs.readFileSync(path, { encoding: "utf-8" }));
-exports.writeObject = (path, data) => fs.writeFileSync(path, JSON.stringify(data, null, 4), { encoding: "utf-8" });
+let parserDict = { ".yaml": YAML, ".yml": YAML, ".json": JSON };
+exports.readObject = (path) => {
+    let { ext } = Path.parse(path);
+    let data = fs.readFileSync(path, { encoding: "utf-8" });
+    return parserDict[ext].parse(data);
+};
+exports.writeObject = (path, data) => {
+    let { ext } = Path.parse(path);
+    let dataString = parserDict[ext].stringify(data, null, "\t");
+    fs.writeFileSync(path, dataString, { encoding: "utf-8" });
+};
 exports.readDirectoryFiles = (path) => fs.readdirSync(path, { withFileTypes: true })
     .filter(p => p.isFile())
     .map(p => ({ name: p.name.split(".")[0], file: exports.readObject(`${path}/${p.name}`) }));

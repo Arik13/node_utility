@@ -12,10 +12,11 @@
     "author": "Arik Dicks",
     "license": "ISC",
     "dependencies": {
-        "module-alias": "^2.2.2",
         "change-case": "^4.1.2",
         "chart.js-image": "^5.6.0",
-        "ts_utility": "github:Arik13/ts_utility"
+        "module-alias": "^2.2.2",
+        "ts_utility": "github:Arik13/ts_utility",
+        "yaml": "^1.10.2"
     },
     "devDependencies": {
         "@types/node": "^14.0.1",

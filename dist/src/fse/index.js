@@ -13,6 +13,8 @@ exports.copyDirectoryInto = exports.writeDirectory = exports.clearFolder = expor
 const fs = require("fs");
 const YAML = require("yaml");
 const Path = require("path");
+// import { stringify } from "@node/stringifier";
+const DirMapInitializer_1 = require("./DirMapInitializer");
 exports.readDirectory = (path) => {
     try {
         let paths = fs.readdirSync(path, { withFileTypes: true });
@@ -185,7 +187,14 @@ exports.writeDirectory = (dir, path) => {
     console.log("UNIMLPEMENTED");
 };
 exports.copyDirectoryInto = (from, to) => {
-    let descriptionDir = exports.readDirectory(from);
-    exports.writeDirectory(descriptionDir, to);
+    let dirMap = DirMapInitializer_1.dirMapFromPath(from);
+    dirMap.root.children.forEach(dir => {
+        dirMap.traverse(dir => {
+            if (dir.ext)
+                fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
+            else
+                fs.mkdirSync(`${to}${dir.path}`);
+        }, dir.id);
+    });
 };
 //# sourceMappingURL=index.js.map

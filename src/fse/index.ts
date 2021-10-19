@@ -3,6 +3,7 @@ import * as YAML from "yaml";
 import * as Path from "path";
 import { Dict } from "ts_utility/dist/src/Types";
 // import { stringify } from "@node/stringifier";
+import { dirMapFromPath } from "./DirMapInitializer";
 
 //______________________________________________________________________________________________________
 //______________________________________________________________________________________________________
@@ -245,6 +246,13 @@ export let writeDirectory = (dir: Dir, path: string) => {
     console.log("UNIMLPEMENTED");
 }
 export let copyDirectoryInto = (from: string, to: string) => {
-    let descriptionDir = readDirectory(from)
-    writeDirectory(descriptionDir, to);
+    let dirMap = dirMapFromPath(from);
+    dirMap.root.children.forEach(dir => {
+        dirMap.traverse(dir => {
+            if (dir.ext)
+                fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
+            else
+                fs.mkdirSync(`${to}${dir.path}`);
+        }, dir.id);
+    })
 }

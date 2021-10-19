@@ -197,7 +197,7 @@
         "affectsGlobalScope": false
       },
       "../src/fse/dirmapinitializer.ts": {
-        "version": "22c6cf9e38bf687fb83d59f38f150d089767bf222ea70e8ecdff221f8f95ea94",
+        "version": "c33502f84097e0a747e59c9134ddccd7f8b9274413936b7c75d02afa120ac91d",
         "signature": "f5bc7695274f7d1f1fdb949fac5557279db377e41fbc9b1bc9660f951e4e0da4",
         "affectsGlobalScope": false
       },
@@ -207,7 +207,7 @@
         "affectsGlobalScope": false
       },
       "../app.ts": {
-        "version": "9d76644310bbda7fa587da4412474ade9134b61dff3574f1a34d6308bd4f646b",
+        "version": "6b9d32c541b5dfc7820bbafef1ab8f41b324a1edd7708ea9ecae4c8be5b1b6f5",
         "signature": "943f722e78a985e1cd9a5d66ba37d11d3827a82a4973f076cec322aa1896633a",
         "affectsGlobalScope": false
       },

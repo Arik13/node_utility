@@ -17,23 +17,22 @@ export let traverseDirPaths = (path: string, visitDir: (path: string) => void, v
 
 export let dirMapFromPath = (rootPath: string) => {
     let dirMap = new DirectoryMap();
+    let rootPD = Path.parse(rootPath);
+    let rootStem = rootPD.dir.substring(1);
+
+    let handler = (subHandler: (pd: Path.ParsedPath, parent: Directory) => void) => (path: string) => {
+        let pd = Path.parse(path);
+        let parentPath = pd.dir.substring(1).replace(rootStem, "");
+        let parent = dirMap.get(parentPath);
+        subHandler(pd, parent);
+    }
     traverseDirPaths(
         rootPath,
-        path => {
-            let pd = Path.parse(path);
-            let parentPath = pd.dir.substring(1)
-            let parent = dirMap.get(parentPath);
-            dirMap.createDir(pd.name, parent.id);
-        },
-        path => {
-            let pd = Path.parse(path);
-            let parentPath = pd.dir.substring(1)
-            let parent = dirMap.get(parentPath);
-            dirMap.createAssetDir({
-                id: pd.name,
-                name: pd.name,
-            }, pd.ext, parent.id);
-        },
+        handler((pd, parent) => dirMap.createDir(pd.name, parent.id)),
+        handler((pd, parent) => dirMap.createAssetDir({
+            id: pd.name,
+            name: pd.name,
+        }, pd.ext, parent.id)),
     );
     let rootName = rootPath.substring(1);
     dirMap.map(dir => dir.path = dir.path.replace(rootName, ""))

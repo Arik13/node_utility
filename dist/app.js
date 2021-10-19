@@ -5,7 +5,8 @@ require("module-alias/register");
 // dirMapFromPath("./test");
 const fse_1 = require("@node/fse");
 const fs = require("fs");
-fs.rmSync("./test2", { recursive: true, force: true });
-fs.mkdirSync("./test2");
-fse_1.copyDirectoryInto("./test", "./test2");
+let from = "./test/inner";
+let to = "./test2";
+fs.rmSync(to, { recursive: true, force: true });
+fse_1.copyDirectoryInto(from, to);
 //# sourceMappingURL=app.js.map

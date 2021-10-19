@@ -7,6 +7,7 @@ import "module-alias/register";
 import { copyDirectoryInto } from "@node/fse";
 
 import * as fs from "fs";
-fs.rmSync("./test2", { recursive: true, force: true });
-fs.mkdirSync("./test2");
-copyDirectoryInto("./test", "./test2");
+let from = "./test/inner";
+let to = "./test2";
+fs.rmSync(to, { recursive: true, force: true });
+copyDirectoryInto(from, to);

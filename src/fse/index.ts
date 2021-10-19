@@ -247,12 +247,10 @@ export let writeDirectory = (dir: Dir, path: string) => {
 }
 export let copyDirectoryInto = (from: string, to: string) => {
     let dirMap = dirMapFromPath(from);
-    dirMap.root.children.forEach(dir => {
-        dirMap.traverse(dir => {
-            if (dir.ext)
-                fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
-            else
-                fs.mkdirSync(`${to}${dir.path}`);
-        }, dir.id);
-    })
+    dirMap.traverse(dir => {
+        if (dir.ext)
+            fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
+        else
+            fs.mkdirSync(`${to}${dir.path}`);
+    });
 }

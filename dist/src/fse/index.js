@@ -188,13 +188,11 @@ exports.writeDirectory = (dir, path) => {
 };
 exports.copyDirectoryInto = (from, to) => {
     let dirMap = DirMapInitializer_1.dirMapFromPath(from);
-    dirMap.root.children.forEach(dir => {
-        dirMap.traverse(dir => {
-            if (dir.ext)
-                fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
-            else
-                fs.mkdirSync(`${to}${dir.path}`);
-        }, dir.id);
+    dirMap.traverse(dir => {
+        if (dir.ext)
+            fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
+        else
+            fs.mkdirSync(`${to}${dir.path}`);
     });
 };
 //# sourceMappingURL=index.js.map

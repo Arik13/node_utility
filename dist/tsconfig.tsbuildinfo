@@ -202,7 +202,7 @@
         "affectsGlobalScope": false
       },
       "../src/fse/index.ts": {
-        "version": "70cc1282f81cc268f2361c94f1b507b955f728f2e290cb145923fef8827585c6",
+        "version": "16e0e8ba6e78fe044c715db5b4a2bb983985e654749184dd8421cee6ca5698f4",
         "signature": "8c456dfaf4aa1d755dc194c203cea00b57279159febc863a0e29295aad4c8fac",
         "affectsGlobalScope": false
       },

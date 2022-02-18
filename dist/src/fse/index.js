@@ -15,6 +15,7 @@ const YAML = require("yaml");
 const Path = require("path");
 // import { stringify } from "@node/stringifier";
 const DirMapInitializer_1 = require("./DirMapInitializer");
+YAML.scalarOptions.str.fold = { lineWidth: 0, minContentWidth: 0 };
 exports.readDirectory = (path) => {
     try {
         let paths = fs.readdirSync(path, { withFileTypes: true });
@@ -160,6 +161,7 @@ exports.readObject = (path) => {
 };
 exports.writeObject = (path, data) => {
     let { ext } = Path.parse(path);
+    let options = ext == ".yaml" ? {} : null;
     let dataString = parserDict[ext].stringify(data, null, "\t");
     fs.writeFileSync(path, dataString, { encoding: "utf-8" });
 };

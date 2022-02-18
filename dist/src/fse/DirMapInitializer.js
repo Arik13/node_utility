@@ -28,7 +28,7 @@ exports.dirMapFromPath = (rootPath) => {
     exports.traverseDirPaths(rootPath, handler((pd, parent) => dirMap.createDir(pd.name, parent.id)), handler((pd, parent) => dirMap.createAssetDir({
         id: pd.name,
         name: pd.name,
-    }, pd.ext, parent.id)));
+    }, pd.ext, parent.id, Directory_1.ASSET_NAME.FALSEY)));
     let rootName = rootPath.substring(1);
     dirMap.map(dir => dir.path = dir.path.replace(rootName, ""));
     let root = dirMap.root.children[0];

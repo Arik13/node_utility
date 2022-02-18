@@ -1,4 +1,4 @@
-import { DirectoryMap, Directory } from "@util/Directory";
+import { DirectoryMap, Directory, ASSET_NAME } from "@util/Directory";
 import * as fs from "fs";
 import * as Path from "path";
 import { deeplog } from "@util/Functions";
@@ -32,7 +32,7 @@ export let dirMapFromPath = (rootPath: string) => {
         handler((pd, parent) => dirMap.createAssetDir({
             id: pd.name,
             name: pd.name,
-        }, pd.ext, parent.id)),
+        }, pd.ext, parent.id, ASSET_NAME.FALSEY)),
     );
     let rootName = rootPath.substring(1);
     dirMap.map(dir => dir.path = dir.path.replace(rootName, ""))

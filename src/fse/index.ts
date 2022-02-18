@@ -5,6 +5,8 @@ import { Dict } from "ts_utility/dist/src/Types";
 // import { stringify } from "@node/stringifier";
 import { dirMapFromPath } from "./DirMapInitializer";
 
+YAML.scalarOptions.str.fold = {lineWidth: 0, minContentWidth: 0};
+
 //______________________________________________________________________________________________________
 //______________________________________________________________________________________________________
 
@@ -217,6 +219,9 @@ export let readObject = (path: string) => {
 }
 export let writeObject = (path: string, data: any) => {
     let {ext} = Path.parse(path);
+    let options = ext == ".yaml"? {
+
+    } : null;
     let dataString = parserDict[ext].stringify(data, null, "\t");
     fs.writeFileSync(path, dataString, {encoding: "utf-8"});
 }

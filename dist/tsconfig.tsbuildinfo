@@ -192,8 +192,8 @@
         "affectsGlobalScope": false
       },
       "../node_modules/ts_utility/dist/src/functions.d.ts": {
-        "version": "d90c7a60efbf797406339f2184fe5b4d7c567d3ff0074ed5ede787396f528bec",
-        "signature": "d90c7a60efbf797406339f2184fe5b4d7c567d3ff0074ed5ede787396f528bec",
+        "version": "a17bc1e4ac6ade9d6ddd76dcb906b946274c44b0eab42e7e0ad93e23e040e037",
+        "signature": "a17bc1e4ac6ade9d6ddd76dcb906b946274c44b0eab42e7e0ad93e23e040e037",
         "affectsGlobalScope": false
       },
       "../src/fse/dirmapinitializer.ts": {
@@ -211,24 +211,14 @@
         "signature": "943f722e78a985e1cd9a5d66ba37d11d3827a82a4973f076cec322aa1896633a",
         "affectsGlobalScope": false
       },
-      "../node_modules/chart.js-image/types.d.ts": {
-        "version": "6386871ec103f66c375f78b6b6c774c9ce0952f235517412a89e1cb7f82cf5b2",
-        "signature": "6386871ec103f66c375f78b6b6c774c9ce0952f235517412a89e1cb7f82cf5b2",
-        "affectsGlobalScope": false
-      },
       "../src/chart.ts": {
-        "version": "95504286db75a9083c804d7ff67af5ecba3a3b04d17bc6bddeb50215c2e44735",
-        "signature": "ceec825b42ba9a70f80c1b961c717b4201f551409f1f4cc8ca32089839d494c4",
+        "version": "ab277aa66f6f197fed9b091eabd2de6c0391e0c9c30b848356d8990c72bea9ef",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "../src/stringifier.ts": {
         "version": "86f089a00e8643a4b9c8d5e5a555b075b8dd385c5a9713c1567150b6cca8ddd2",
         "signature": "96a8ae450cd29b3c5bdbd7deb202ee2886907fda2b0ee2ebb26cff1646117968",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/json5/index.d.ts": {
-        "version": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
-        "signature": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/assert.d.ts": {
@@ -692,10 +682,6 @@
         "../node_modules/yaml/parse-cst.d.ts",
         "../node_modules/yaml/types.d.ts"
       ],
-      "../src/chart.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/chart.js-image/types.d.ts"
-      ],
       "../src/fse/dirmapinitializer.ts": [
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/path.d.ts",
@@ -901,7 +887,6 @@
     },
     "semanticDiagnosticsPerFile": [
       "../app.ts",
-      "../node_modules/@types/json5/index.d.ts",
       "../node_modules/@types/node/assert.d.ts",
       "../node_modules/@types/node/async_hooks.d.ts",
       "../node_modules/@types/node/buffer.d.ts",
@@ -951,7 +936,6 @@
       "../node_modules/@types/uniqid/index.d.ts",
       "../node_modules/@types/webidl-conversions/index.d.ts",
       "../node_modules/@types/whatwg-url/ts3.9/index.d.ts",
-      "../node_modules/chart.js-image/types.d.ts",
       "../node_modules/ts_utility/dist/src/directory.d.ts",
       "../node_modules/ts_utility/dist/src/functions.d.ts",
       "../node_modules/ts_utility/dist/src/types.d.ts",

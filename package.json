@@ -1,6 +1,6 @@
 {
     "name": "node_utility",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "description": "",
     "scripts": {
         "start": "ts-node-dev --respawn --cls --exit-child --ignore-watch node_modules app.ts",

@@ -13,17 +13,16 @@ exports.copyDirectoryInto = exports.writeDirectory = exports.clearFolder = expor
 const fs = require("fs");
 const YAML = require("yaml");
 const Path = require("path");
-// import { stringify } from "@node/stringifier";
 const DirMapInitializer_1 = require("./DirMapInitializer");
 YAML.scalarOptions.str.fold = { lineWidth: 0, minContentWidth: 0 };
-exports.readDirectory = (path) => {
+let readDirectory = (path) => {
     try {
         let paths = fs.readdirSync(path, { withFileTypes: true });
         // console.log(`Scanning: ${path}`);
         return {
             name: path.split("/").pop(),
             path,
-            dirs: paths.filter(p => !p.isFile()).map(f => exports.readDirectory(`${path}/${f.name}`)),
+            dirs: paths.filter(p => !p.isFile()).map(f => (0, exports.readDirectory)(`${path}/${f.name}`)),
             files: paths.filter(p => p.isFile()).map(p => ({ name: p.name, path: `${path}/${p.name}` })),
         };
     }
@@ -36,12 +35,16 @@ exports.readDirectory = (path) => {
         };
     }
 };
-exports.readFiles = (path) => exports.linearizeFiles(exports.readDirectory(path));
-exports.getFilesData = (path) => exports.readFiles(path).map(x => exports.readObject(x.path));
-exports.getFileData = (dir) => {
-    return exports.traverseDirDFS(dir, null, f => f.buffer = fs.readFileSync(f.path, "utf-8"));
+exports.readDirectory = readDirectory;
+let readFiles = (path) => (0, exports.linearizeFiles)((0, exports.readDirectory)(path));
+exports.readFiles = readFiles;
+let getFilesData = (path) => (0, exports.readFiles)(path).map(x => (0, exports.readObject)(x.path));
+exports.getFilesData = getFilesData;
+let getFileData = (dir) => {
+    return (0, exports.traverseDirDFS)(dir, null, f => f.buffer = fs.readFileSync(f.path, "utf-8"));
 };
-exports.traverseDirDFS = (dir, folderHandler, fileHandler) => {
+exports.getFileData = getFileData;
+let traverseDirDFS = (dir, folderHandler, fileHandler) => {
     let helper = (dir, folderHandler, fileHandler) => {
         dir.dirs.forEach(subdir => {
             if (folderHandler)
@@ -56,28 +59,33 @@ exports.traverseDirDFS = (dir, folderHandler, fileHandler) => {
         folderHandler(dir, null);
     return helper(dir, folderHandler, fileHandler);
 };
-exports.traverseDirLtR = (dir, folderHandler, fileHandler) => {
+exports.traverseDirDFS = traverseDirDFS;
+let traverseDirLtR = (dir, folderHandler, fileHandler) => {
     if (fileHandler)
         dir.files.forEach(fileHandler);
-    dir.dirs.forEach(subdir => exports.traverseDirLtR(subdir, folderHandler, fileHandler));
+    dir.dirs.forEach(subdir => (0, exports.traverseDirLtR)(subdir, folderHandler, fileHandler));
     if (folderHandler)
         folderHandler(dir);
     return dir;
 };
-exports.dirDataCreator = (folderHandler, fileHandler) => (path) => {
-    let dir = exports.readDirectory(path);
-    return exports.traverseDirLtR(dir, f => f.data = folderHandler(f), f => f.data = fileHandler(f));
+exports.traverseDirLtR = traverseDirLtR;
+let dirDataCreator = (folderHandler, fileHandler) => (path) => {
+    let dir = (0, exports.readDirectory)(path);
+    return (0, exports.traverseDirLtR)(dir, f => f.data = folderHandler(f), f => f.data = fileHandler(f));
 };
-exports.linearizeDirectory = (dir) => {
+exports.dirDataCreator = dirDataCreator;
+let linearizeDirectory = (dir) => {
     let dirs = [];
-    exports.traverseDirDFS(dir, f => dirs.push(f), f => { });
+    (0, exports.traverseDirDFS)(dir, f => dirs.push(f), f => { });
     return dirs;
 };
-exports.linearizeFiles = (dir) => {
+exports.linearizeDirectory = linearizeDirectory;
+let linearizeFiles = (dir) => {
     let files = [];
-    exports.traverseDirDFS(dir, null, f => files.push(f));
+    (0, exports.traverseDirDFS)(dir, null, f => files.push(f));
     return files;
 };
+exports.linearizeFiles = linearizeFiles;
 const BLOCK_SIZE = 512;
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0)
@@ -89,9 +97,9 @@ function formatBytes(bytes, decimals = 2) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 exports.formatBytes = formatBytes;
-exports.setFileStats = (dir) => __awaiter(void 0, void 0, void 0, function* () {
+let setFileStats = (dir) => __awaiter(void 0, void 0, void 0, function* () {
     let promises = [];
-    exports.traverseDirLtR(dir, null, f => {
+    (0, exports.traverseDirLtR)(dir, null, f => {
         promises.push(new Promise((resolve, reject) => {
             fs.stat(f.path, (err, stats) => {
                 if (err) {
@@ -110,7 +118,8 @@ exports.setFileStats = (dir) => __awaiter(void 0, void 0, void 0, function* () {
     yield Promise.all(promises);
     return dir;
 });
-exports.setFolderStats = (f) => {
+exports.setFileStats = setFileStats;
+let setFolderStats = (f) => {
     try {
         let fileSizesTotal = f.files.reduce((p, c) => p + c.data.size, 0);
         let dirSizesTotal = f.dirs.reduce((p, c) => p + c.data.size.raw, 0);
@@ -146,50 +155,58 @@ exports.setFolderStats = (f) => {
         };
     }
 };
-exports.readDirectoryWithStats = (path) => __awaiter(void 0, void 0, void 0, function* () {
-    let dir = exports.readDirectory(path);
-    yield exports.setFileStats(dir);
-    exports.traverseDirLtR(dir, f => f.data = exports.setFolderStats(f));
+exports.setFolderStats = setFolderStats;
+let readDirectoryWithStats = (path) => __awaiter(void 0, void 0, void 0, function* () {
+    let dir = (0, exports.readDirectory)(path);
+    yield (0, exports.setFileStats)(dir);
+    (0, exports.traverseDirLtR)(dir, f => f.data = (0, exports.setFolderStats)(f));
     return dir;
 });
-exports.readDirectoryWithStatsSync = exports.dirDataCreator(exports.setFolderStats, f => fs.statSync(f.path));
+exports.readDirectoryWithStats = readDirectoryWithStats;
+exports.readDirectoryWithStatsSync = (0, exports.dirDataCreator)(exports.setFolderStats, f => fs.statSync(f.path));
 let parserDict = { ".yaml": YAML, ".yml": YAML, ".json": JSON };
-exports.readObject = (path) => {
+let readObject = (path) => {
     let { ext } = Path.parse(path);
     let data = fs.readFileSync(path, { encoding: "utf-8" });
     return parserDict[ext].parse(data);
 };
-exports.writeObject = (path, data) => {
+exports.readObject = readObject;
+let writeObject = (path, data) => {
     let { ext } = Path.parse(path);
     let options = ext == ".yaml" ? {} : null;
     let dataString = parserDict[ext].stringify(data, null, "\t");
     fs.writeFileSync(path, dataString, { encoding: "utf-8" });
 };
-exports.readDirectoryFiles = (path) => fs.readdirSync(path, { withFileTypes: true })
+exports.writeObject = writeObject;
+let readDirectoryFiles = (path) => fs.readdirSync(path, { withFileTypes: true })
     .filter(p => p.isFile())
-    .map(p => ({ name: p.name.split(".")[0], file: exports.readObject(`${path}/${p.name}`) }));
-exports.clearExtensionFromFolder = (path, extension = ".json") => {
+    .map(p => ({ name: p.name.split(".")[0], file: (0, exports.readObject)(`${path}/${p.name}`) }));
+exports.readDirectoryFiles = readDirectoryFiles;
+let clearExtensionFromFolder = (path, extension = ".json") => {
     let subPaths = fs.readdirSync(path);
     subPaths.forEach(subPath => {
         let fileExtension = subPath.split(".")[1];
         if (!fileExtension && fileExtension != extension)
-            return exports.clearExtensionFromFolder(`${path}/${subPath}`);
+            return (0, exports.clearExtensionFromFolder)(`${path}/${subPath}`);
         return fs.unlinkSync(`${path}/${subPath}`);
     });
 };
-exports.clearFolder = (path) => {
+exports.clearExtensionFromFolder = clearExtensionFromFolder;
+let clearFolder = (path) => {
     let subPaths = fs.readdirSync(path, { withFileTypes: true });
     subPaths.forEach(subPath => {
         if (subPath.isFile())
             return fs.unlinkSync(`${path}/${subPath.name}`);
-        return exports.clearFolder(`${path}/${subPath.name}`);
+        return (0, exports.clearFolder)(`${path}/${subPath.name}`);
     });
 };
-exports.writeDirectory = (dir, path) => {
+exports.clearFolder = clearFolder;
+let writeDirectory = (dir, path) => {
     console.log("UNIMLPEMENTED");
 };
-exports.copyDirectoryInto = (from, to) => {
-    let dirMap = DirMapInitializer_1.dirMapFromPath(from);
+exports.writeDirectory = writeDirectory;
+let copyDirectoryInto = (from, to) => {
+    let dirMap = (0, DirMapInitializer_1.dirMapFromPath)(from);
     dirMap.traverse(dir => {
         if (dir.ext)
             fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
@@ -197,4 +214,5 @@ exports.copyDirectoryInto = (from, to) => {
             fs.mkdirSync(`${to}${dir.path}`);
     });
 };
+exports.copyDirectoryInto = copyDirectoryInto;
 //# sourceMappingURL=index.js.map

@@ -2,7 +2,6 @@ import * as fs from "fs";
 import * as YAML from "yaml";
 import * as Path from "path";
 import { Dict } from "ts_utility/dist/src/Types";
-// import { stringify } from "@node/stringifier";
 import { dirMapFromPath } from "./DirMapInitializer";
 
 YAML.scalarOptions.str.fold = {lineWidth: 0, minContentWidth: 0};

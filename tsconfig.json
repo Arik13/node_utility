@@ -67,12 +67,14 @@
         "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
         "baseUrl": ".",
         "paths": {
-            "@node/*": ["./src/*"],
             "@util/*": ["./node_modules/ts_utility/dist/src/*"],
         },
         "resolveJsonModule": true,
         "typeRoots": [
             "node_modules/@types"
+        ],
+        "plugins": [
+            { "transform": "./node_modules/ts_utility/dist/src/ts/customTransform.js" },
         ]
     },
     "exclude": [

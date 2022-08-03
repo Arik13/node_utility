@@ -4,7 +4,7 @@ exports.dirMapFromPath = exports.traverseDirPaths = void 0;
 const Directory_1 = require("@util/Directory");
 const fs = require("fs");
 const Path = require("path");
-exports.traverseDirPaths = (path, visitDir, visitFile) => {
+let traverseDirPaths = (path, visitDir, visitFile) => {
     visitDir(path);
     let paths = fs.readdirSync(path, { withFileTypes: true });
     paths.forEach(f => {
@@ -12,10 +12,11 @@ exports.traverseDirPaths = (path, visitDir, visitFile) => {
         if (f.isFile())
             visitFile(newPath);
         else if (f.isDirectory())
-            exports.traverseDirPaths(newPath, visitDir, visitFile);
+            (0, exports.traverseDirPaths)(newPath, visitDir, visitFile);
     });
 };
-exports.dirMapFromPath = (rootPath) => {
+exports.traverseDirPaths = traverseDirPaths;
+let dirMapFromPath = (rootPath) => {
     let dirMap = new Directory_1.DirectoryMap();
     let rootPD = Path.parse(rootPath);
     let rootStem = rootPD.dir.substring(1);
@@ -25,7 +26,7 @@ exports.dirMapFromPath = (rootPath) => {
         let parent = dirMap.get(parentPath);
         subHandler(pd, parent);
     };
-    exports.traverseDirPaths(rootPath, handler((pd, parent) => dirMap.createDir(pd.name, parent.id)), handler((pd, parent) => dirMap.createAssetDir({
+    (0, exports.traverseDirPaths)(rootPath, handler((pd, parent) => dirMap.createDir(pd.name, parent.id)), handler((pd, parent) => dirMap.createAssetDir({
         id: pd.name,
         name: pd.name,
     }, pd.ext, parent.id)));
@@ -36,4 +37,5 @@ exports.dirMapFromPath = (rootPath) => {
     dirMap.reset(root);
     return dirMap;
 };
+exports.dirMapFromPath = dirMapFromPath;
 //# sourceMappingURL=DirMapInitializer.js.map

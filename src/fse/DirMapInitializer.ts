@@ -1,7 +1,6 @@
-import { DirectoryMap, Directory } from "@util/Directory";
+import { DirectoryMap, Directory } from "ts_utility/dist/src/Directory";
 import * as fs from "fs";
 import * as Path from "path";
-import { deeplog } from "@util/Functions";
 
 export let traverseDirPaths = (path: string, visitDir: (path: string) => void, visitFile: (path: string) => void) => {
     visitDir(path);

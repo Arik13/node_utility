@@ -31,5 +31,31 @@
     },
     "files": [
         "/dist"
-    ]
+    ],
+    "exports": {
+        "./chart": "./lib/src/chart.js",
+        "./fse/buildLibraryExports": "./lib/src/fse/buildLibraryExports.js",
+        "./fse/DirMapInitializer": "./lib/src/fse/DirMapInitializer.js",
+        "./fse": "./lib/src/fse/index.js",
+        "./stringifier": "./lib/src/stringifier.js"
+    },
+    "typesVersions": {
+        "*": {
+            "chart": [
+                "./lib/src/chart.d.ts"
+            ],
+            "fse/buildLibraryExports": [
+                "./lib/src/fse/buildLibraryExports.d.ts"
+            ],
+            "fse/DirMapInitializer": [
+                "./lib/src/fse/DirMapInitializer.d.ts"
+            ],
+            "fse": [
+                "./lib/src/fse/index.d.ts"
+            ],
+            "stringifier": [
+                "./lib/src/stringifier.d.ts"
+            ]
+        }
+    }
 }

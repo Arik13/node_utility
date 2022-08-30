@@ -62,3 +62,4 @@ export declare let clearExtensionFromFolder: (path: string, extension?: string) 
 export declare let clearFolder: (path: string) => void;
 export declare let writeDirectory: (dir: Dir, path: string) => void;
 export declare let copyDirectoryInto: (from: string, to: string) => void;
+export declare let buildLibraryExports: (root?: string, buildPath?: string, packagePath?: string) => void;

@@ -1,0 +1,3 @@
+import { buildLibraryExports } from ".";
+
+buildLibraryExports();

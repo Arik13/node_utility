@@ -2,11 +2,13 @@
     "name": "node_utility",
     "version": "1.0.17",
     "description": "",
+    "main": "lib/src/index.js",
+    "types": "lib/src/index.d.ts",
     "scripts": {
         "start": "ts-node-dev --respawn --cls --exit-child --ignore-watch node_modules app.ts",
         "update": "npm update ts_utility",
         "test": "tsc --noEmit",
-        "build": "ttsc",
+        "build": "rmdir lib && ttsc && ts-node src/fse/buildExports",
         "clean": "rmdir /s /q dist"
     },
     "author": "Arik Dicks",
@@ -34,7 +36,7 @@
     ],
     "exports": {
         "./chart": "./lib/src/chart.js",
-        "./fse/buildLibraryExports": "./lib/src/fse/buildLibraryExports.js",
+        "./fse/buildExports": "./lib/src/fse/buildExports.js",
         "./fse/DirMapInitializer": "./lib/src/fse/DirMapInitializer.js",
         "./fse": "./lib/src/fse/index.js",
         "./stringifier": "./lib/src/stringifier.js"
@@ -44,8 +46,8 @@
             "chart": [
                 "./lib/src/chart.d.ts"
             ],
-            "fse/buildLibraryExports": [
-                "./lib/src/fse/buildLibraryExports.d.ts"
+            "fse/buildExports": [
+                "./lib/src/fse/buildExports.d.ts"
             ],
             "fse/DirMapInitializer": [
                 "./lib/src/fse/DirMapInitializer.d.ts"

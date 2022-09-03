@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as YAML from "yaml";
 import * as Path from "path";
-import { Dict } from "ts_utility/dist/src/Types";
+import { Dict } from "ts_utility/Types";
 import { dirMapFromPath, traverseDirPaths } from "./DirMapInitializer";
 
 YAML.scalarOptions.str.fold = {lineWidth: 0, minContentWidth: 0};
@@ -268,6 +268,13 @@ let generateLibraryExports = (root: string, buildPath: string) => {
         path => {},
         path => {
             let pd = Path.parse(path);
+            if (pd.ext == ".json") {
+                let exportKey = path.replace(root, ".").replace(".json", "");
+                let exportValue = path.replace(".", buildPath);
+                data.exports[exportKey] = exportValue;
+                data.typesVersions[exportKey.replace("./", "")] = [exportValue];
+                return;
+            }
             if (pd.ext != ".ts") return;
             let exportKey = path.replace(root, ".").replace(".ts", "");
             let exportValue = path.replace(".", buildPath).replace(".ts", ".js");
@@ -289,6 +296,7 @@ export let buildLibraryExports = (root: string = "./src", buildPath: string = ".
     let pkgString = fs.readFileSync(packagePath, "utf-8");
     let pkgJson = JSON.parse(pkgString);
     pkgJson.exports = result.exports;
+    pkgJson.typesVersions = {};
     pkgJson.typesVersions["*"] = result.typesVersions;
     fs.writeFileSync(packagePath, JSON.stringify(pkgJson, null, 4));
 }

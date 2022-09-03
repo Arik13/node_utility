@@ -1,4 +1,4 @@
-import { DirectoryMap, Directory } from "ts_utility/dist/src/Directory";
+import { DirectoryMap, Directory } from "ts_utility/Directory";
 import * as fs from "fs";
 import * as Path from "path";
 

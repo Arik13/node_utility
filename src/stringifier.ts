@@ -1,4 +1,4 @@
-import { Primitive } from "@util/Types";
+import { Primitive } from "ts_utility/Types";
 
 export let searchForNonASCII = (str: string) => {
     let codes = str.split("")

@@ -6,7 +6,7 @@
     "types": "lib/src/index.d.ts",
     "scripts": {
         "test": "tsc --noEmit -p .",
-        "build": "tsc && ../vtt-dev-ops/scripts/build-exports.ps1"
+        "build": "tsc && ../vtt-dev-ops/scripts/build/exports.ps1"
     },
     "author": "Arik Dicks",
     "license": "ISC",

@@ -28,13 +28,11 @@ export let dirMapFromPath = (rootPath: string) => {
     traverseDirPaths(
         rootPath,
         handler((pd, parent) => dirMap.createDir(pd.name, parent.id)),
-        handler((pd, parent) => dirMap.createAssetDir({
-            id: pd.name,
-            name: pd.name,
-        }, pd.ext, parent.id)),
+        handler((pd, parent) => dirMap.createAssetDir(pd.name, parent.id, pd.name, pd.ext)),
     );
     let rootName = rootPath.substring(1);
     dirMap.map(dir => dir.path = dir.path.replace(rootName, ""))
+
     let root = dirMap.root.children[0];
     delete root.parentID;
     dirMap.reset(root);

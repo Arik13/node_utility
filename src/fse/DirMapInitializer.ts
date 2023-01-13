@@ -14,12 +14,20 @@ export let traverseDirPaths = (path: string, visitDir: (path: string) => void, v
     });
 }
 
-export let dirMapFromPath = (rootPath: string) => {
+export interface DirMapFromPathOptions {
+    subpath?: string;
+    replacer?: (val: string) => string, loadSubPath?: string;
+}
+export let dirMapFromPath = (rootPath: string, options: DirMapFromPathOptions = {}) => {
     let dirMap = new DirectoryMap();
     let rootPD = Path.parse(rootPath);
     let rootStem = rootPD.dir.substring(1);
+    let {subpath, replacer} = options;
 
     let handler = (subHandler: (pd: Path.ParsedPath, parent: Directory) => void) => (path: string) => {
+        if (replacer) {
+            path = replacer(path);
+        }
         let pd = Path.parse(path);
         let parentPath = pd.dir.substring(1).replace(rootStem, "");
         let parent = dirMap.get(parentPath);

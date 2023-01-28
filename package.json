@@ -5,7 +5,7 @@
     "main": "lib/src/index.js",
     "types": "lib/src/index.d.ts",
     "author": "Arik Dicks",
-    "license": "ISC",
+    "license": "UNLICENSED",
     "dependencies": {
         "change-case": "^4.1.2",
         "ts_utility": "file:../ts_utility",

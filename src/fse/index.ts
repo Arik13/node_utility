@@ -254,8 +254,9 @@ export let copyDirectoryInto = (from: string, to: string) => {
     dirMap.traverse(dir => {
         if (dir.ext)
             fs.writeFileSync(`${to}${dir.path}`, fs.readFileSync(`${from}${dir.path}`), "utf-8");
-        else
+        else if (!fs.existsSync(`${to}${dir.path}`)) {
             fs.mkdirSync(`${to}${dir.path}`);
+        }
     });
 }
 

@@ -44,6 +44,7 @@ export let visitYamlFiles = (rootPath: string, handler: (options: Options<any>) 
     let dirMap = dirMapFromPath(rootPath);
     dirMap.visitAssets(dir => {
         let path = `${rootPath}${dir.path}`;
+        if (dir.ext !== ".yaml") return;
         try {
             let data = readObject(path);
             handler({

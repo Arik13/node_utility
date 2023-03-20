@@ -1,7 +1,28 @@
+// {
+//     "extends": "../vtt-dev-ops/ts/backend.tsconfig.json",
+//     "compilerOptions": {
+//         "baseUrl": "./src",
+//         "outDir": "./lib/src",
+//     },
+// }
 {
-    "extends": "../vtt-dev-ops/ts/backend.tsconfig.json",
     "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["ES2019", "DOM"],
+        "types": ["node"],
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "downlevelIteration": true,
+        "strict": true,
+        "strictNullChecks": false,
+        "esModuleInterop": false,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "declaration": true,
         "baseUrl": "./src",
-        "outDir": "./lib/src",
-    },
+        "outDir": "./lib/src"
+    }
 }

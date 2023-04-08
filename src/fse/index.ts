@@ -3,6 +3,7 @@ import * as YAML from "yaml";
 import * as Path from "path";
 import { Dict } from "ts_utility/Types";
 import { dirMapFromPath, traverseDirPaths } from "./DirMapInitializer";
+import { Directory, DirectoryMap } from "ts_utility/Directory";
 
 YAML.scalarOptions.str.fold = {lineWidth: 0, minContentWidth: 0};
 
@@ -42,6 +43,7 @@ export interface FilteredDir {
     name: string;
     data: FolderStats;
 }
+
 
 export let readDirectory = (path: string): Dir<any, any> => {
     try {
@@ -246,8 +248,14 @@ export let clearFolder = (path: string) => {
     });
 }
 
-export let writeDirectory = (dir: Dir, path: string) => {
-    console.log("UNIMPLEMENTED");
+export let writeDirectory = (dirMap: DirectoryMap, to: string, cb: (dir: Directory) => string) => {
+    dirMap.traverse(dir => {
+        if (dir.ext)
+            fs.writeFileSync(`${to}${dir.path}`, cb(dir), "utf-8");
+        else if (!fs.existsSync(`${to}${dir.path}`)) {
+            fs.mkdirSync(`${to}${dir.path}`);
+        }
+    });
 }
 export let copyDirectoryInto = (from: string, to: string) => {
     let dirMap = dirMapFromPath(from);

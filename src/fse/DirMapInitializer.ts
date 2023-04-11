@@ -5,42 +5,30 @@ import { readObject } from "./index";
 import { Options } from "./visitors";
 import * as YAML from "yaml";
 
+interface WriteOptions {
+    to: string;
+    dataCB: (dir: Directory) => string;
+    subpath?: string;
+    ext?: string | ((dir: Directory) => string);
+}
 export class NodeDirectoryMap extends DirectoryMap {
     rootPath: string = "";
-    writeTo(to: string, cb: (dir: Directory) => string) {
+    writeTo({to, subpath, dataCB, ext}: WriteOptions) {
         if (!fs.existsSync(`${to}`)) {
             fs.mkdirSync(`${to}`, {recursive: true});
         }
         this.traverse(dir => {
-            if (dir.ext)
-                fs.writeFileSync(`${to}${dir.path}`, cb(dir), "utf-8");
-            else if (!fs.existsSync(`${to}${dir.path}`)) {
-                fs.mkdirSync(`${to}${dir.path}`);
-            }
-        });
-    }
-    writeSubDirTo(subPath: string, to: string, cb: (dir: Directory) => string, ext: string = "") {
-        if (!fs.existsSync(`${to}`)) {
-            fs.mkdirSync(`${to}`, {recursive: true});
-        }
-        this.traverse(dir => {
-            let subpath = dir.path.replace(subPath, "");
+            let path = dir.path.replace(subpath, "");
             if (dir.ext) {
-                let data = cb(dir);
+                let data = dataCB(dir);
+                let extVal = typeof ext === "string"? ext : ext? ext(dir) : "";
                 if (data !== null && data !== undefined)
-                    fs.writeFileSync(`${to}${subpath}${ext}`, data, "utf-8");
+                    fs.writeFileSync(`${to}${path}${extVal}`, data, "utf-8");
             }
-            else if (!fs.existsSync(`${to}${subpath}`)) {
-                fs.mkdirSync(`${to}${subpath}`);
+            else if (!fs.existsSync(`${to}${path}`)) {
+                fs.mkdirSync(`${to}${path}`);
             }
-        }, subPath);
-    }
-    writeYAMLSubDirTo(subPath: string, to: string, cb: (dir: Directory) => any) {
-        this.writeSubDirTo(subPath, to, dir => {
-            let data = cb(dir);
-            if (data !== null && data !== undefined)
-                return YAML.stringify(data);
-        }, ".yaml");
+        }, subpath);
     }
     loadFromPath(rootPath: string, options: DirMapFromPathOptions = {}) {
         this.rootPath = rootPath;
